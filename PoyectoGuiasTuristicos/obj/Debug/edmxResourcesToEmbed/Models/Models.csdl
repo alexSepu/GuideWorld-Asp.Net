@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbGuiasTuristicosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Ciudad">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pais_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Pais" Relationship="Self.fk_Ciudad_Pais" FromRole="Ciudad" ToRole="Pais" />
+    <NavigationProperty Name="Museo" Relationship="Self.fk_Museo_Ciudad" FromRole="Ciudad" ToRole="Museo" />
+    <NavigationProperty Name="Ruta" Relationship="Self.fk_Ruta_Ciudad" FromRole="Ciudad" ToRole="Ruta" />
+  </EntityType>
+  <EntityType Name="Museo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fechaFin" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="plazas" Type="Int32" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fotografia" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="precio" Type="Int32" Nullable="false" />
+    <Property Name="ciudad_id" Type="Int32" Nullable="false" />
+    <Property Name="guia_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ciudad" Relationship="Self.fk_Museo_Ciudad" FromRole="Museo" ToRole="Ciudad" />
+    <NavigationProperty Name="Usuario" Relationship="Self.fk_Museo_Guia" FromRole="Museo" ToRole="Usuario" />
+    <NavigationProperty Name="ReservaOrganizaMuseo" Relationship="Self.fk_ReservaOrganizaMuseo_Museo" FromRole="Museo" ToRole="ReservaOrganizaMuseo" />
+  </EntityType>
+  <EntityType Name="Pais">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Ciudad" Relationship="Self.fk_Ciudad_Pais" FromRole="Pais" ToRole="Ciudad" />
+  </EntityType>
+  <EntityType Name="ReservaOrganizaMuseo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario_id" Type="Int32" Nullable="false" />
+    <Property Name="museo_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Museo" Relationship="Self.fk_ReservaOrganizaMuseo_Museo" FromRole="ReservaOrganizaMuseo" ToRole="Museo" />
+    <NavigationProperty Name="Usuario" Relationship="Self.fk_ReservaOrganizaMuseo_Usuario" FromRole="ReservaOrganizaMuseo" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="ReservaOrganizaRuta">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario_id" Type="Int32" Nullable="false" />
+    <Property Name="ruta_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ruta" Relationship="Self.fk_ReservaOrganizaRuta_Ruta" FromRole="ReservaOrganizaRuta" ToRole="Ruta" />
+    <NavigationProperty Name="Usuario" Relationship="Self.fk_ReservaOrganizaRuta_Usuario" FromRole="ReservaOrganizaRuta" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Ruta">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fechaFinal" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="lugar_quedada" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="plazas" Type="Int32" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="fotografia" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="precio" Type="Int32" Nullable="false" />
+    <Property Name="ciudad_id" Type="Int32" Nullable="false" />
+    <Property Name="guia_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ciudad" Relationship="Self.fk_Ruta_Ciudad" FromRole="Ruta" ToRole="Ciudad" />
+    <NavigationProperty Name="ReservaOrganizaRuta" Relationship="Self.fk_ReservaOrganizaRuta_Ruta" FromRole="Ruta" ToRole="ReservaOrganizaRuta" />
+    <NavigationProperty Name="Usuario" Relationship="Self.fk_Ruta_Guia" FromRole="Ruta" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellidos" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre_usuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tipoUsuario" Type="Boolean" Nullable="false" />
+    <Property Name="contrasenya" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="edad" Type="Int32" />
+    <Property Name="telf" Type="Int32" />
+    <Property Name="correo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idioma" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Museo" Relationship="Self.fk_Museo_Guia" FromRole="Usuario" ToRole="Museo" />
+    <NavigationProperty Name="ReservaOrganizaMuseo" Relationship="Self.fk_ReservaOrganizaMuseo_Usuario" FromRole="Usuario" ToRole="ReservaOrganizaMuseo" />
+    <NavigationProperty Name="ReservaOrganizaRuta" Relationship="Self.fk_ReservaOrganizaRuta_Usuario" FromRole="Usuario" ToRole="ReservaOrganizaRuta" />
+    <NavigationProperty Name="Ruta" Relationship="Self.fk_Ruta_Guia" FromRole="Usuario" ToRole="Ruta" />
+    <NavigationProperty Name="Valoracion" Relationship="Self.fk_Valoracion_Usuario" FromRole="Usuario" ToRole="Valoracion" />
+    <NavigationProperty Name="Valoracion1" Relationship="Self.fk_Valoracion_UsuarioGuia" FromRole="Usuario" ToRole="Valoracion" />
+  </EntityType>
+  <EntityType Name="Valoracion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario_turista_id" Type="Int32" Nullable="false" />
+    <Property Name="usuario_guia_id" Type="Int32" Nullable="false" />
+    <Property Name="mensaje" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="nota" Type="Int32" />
+    <NavigationProperty Name="Usuario" Relationship="Self.fk_Valoracion_Usuario" FromRole="Valoracion" ToRole="Usuario" />
+    <NavigationProperty Name="Usuario1" Relationship="Self.fk_Valoracion_UsuarioGuia" FromRole="Valoracion" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="fk_Ciudad_Pais">
+    <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
+    <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pais">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Ciudad">
+        <PropertyRef Name="pais_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Museo_Ciudad">
+    <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="1" />
+    <End Role="Museo" Type="Self.Museo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ciudad">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Museo">
+        <PropertyRef Name="ciudad_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Ruta_Ciudad">
+    <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="1" />
+    <End Role="Ruta" Type="Self.Ruta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ciudad">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Ruta">
+        <PropertyRef Name="ciudad_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Museo_Guia">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Museo" Type="Self.Museo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Museo">
+        <PropertyRef Name="guia_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ReservaOrganizaMuseo_Museo">
+    <End Role="Museo" Type="Self.Museo" Multiplicity="1" />
+    <End Role="ReservaOrganizaMuseo" Type="Self.ReservaOrganizaMuseo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Museo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ReservaOrganizaMuseo">
+        <PropertyRef Name="museo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ReservaOrganizaMuseo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="ReservaOrganizaMuseo" Type="Self.ReservaOrganizaMuseo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ReservaOrganizaMuseo">
+        <PropertyRef Name="usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ReservaOrganizaRuta_Ruta">
+    <End Role="Ruta" Type="Self.Ruta" Multiplicity="1" />
+    <End Role="ReservaOrganizaRuta" Type="Self.ReservaOrganizaRuta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ruta">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ReservaOrganizaRuta">
+        <PropertyRef Name="ruta_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ReservaOrganizaRuta_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="ReservaOrganizaRuta" Type="Self.ReservaOrganizaRuta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ReservaOrganizaRuta">
+        <PropertyRef Name="usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Ruta_Guia">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Ruta" Type="Self.Ruta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Ruta">
+        <PropertyRef Name="guia_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Valoracion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Valoracion" Type="Self.Valoracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valoracion">
+        <PropertyRef Name="usuario_turista_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Valoracion_UsuarioGuia">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Valoracion" Type="Self.Valoracion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valoracion">
+        <PropertyRef Name="usuario_guia_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbGuiasTuristicosEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Ciudad" EntityType="Self.Ciudad" />
+    <EntitySet Name="Museo" EntityType="Self.Museo" />
+    <EntitySet Name="Pais" EntityType="Self.Pais" />
+    <EntitySet Name="ReservaOrganizaMuseo" EntityType="Self.ReservaOrganizaMuseo" />
+    <EntitySet Name="ReservaOrganizaRuta" EntityType="Self.ReservaOrganizaRuta" />
+    <EntitySet Name="Ruta" EntityType="Self.Ruta" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <EntitySet Name="Valoracion" EntityType="Self.Valoracion" />
+    <AssociationSet Name="fk_Ciudad_Pais" Association="Self.fk_Ciudad_Pais">
+      <End Role="Pais" EntitySet="Pais" />
+      <End Role="Ciudad" EntitySet="Ciudad" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Museo_Ciudad" Association="Self.fk_Museo_Ciudad">
+      <End Role="Ciudad" EntitySet="Ciudad" />
+      <End Role="Museo" EntitySet="Museo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Ruta_Ciudad" Association="Self.fk_Ruta_Ciudad">
+      <End Role="Ciudad" EntitySet="Ciudad" />
+      <End Role="Ruta" EntitySet="Ruta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Museo_Guia" Association="Self.fk_Museo_Guia">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Museo" EntitySet="Museo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ReservaOrganizaMuseo_Museo" Association="Self.fk_ReservaOrganizaMuseo_Museo">
+      <End Role="Museo" EntitySet="Museo" />
+      <End Role="ReservaOrganizaMuseo" EntitySet="ReservaOrganizaMuseo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ReservaOrganizaMuseo_Usuario" Association="Self.fk_ReservaOrganizaMuseo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="ReservaOrganizaMuseo" EntitySet="ReservaOrganizaMuseo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ReservaOrganizaRuta_Ruta" Association="Self.fk_ReservaOrganizaRuta_Ruta">
+      <End Role="Ruta" EntitySet="Ruta" />
+      <End Role="ReservaOrganizaRuta" EntitySet="ReservaOrganizaRuta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ReservaOrganizaRuta_Usuario" Association="Self.fk_ReservaOrganizaRuta_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="ReservaOrganizaRuta" EntitySet="ReservaOrganizaRuta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Ruta_Guia" Association="Self.fk_Ruta_Guia">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Ruta" EntitySet="Ruta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Valoracion_Usuario" Association="Self.fk_Valoracion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Valoracion" EntitySet="Valoracion" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Valoracion_UsuarioGuia" Association="Self.fk_Valoracion_UsuarioGuia">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Valoracion" EntitySet="Valoracion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
